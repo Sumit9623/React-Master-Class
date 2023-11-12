@@ -1,15 +1,29 @@
 
+// here i have createed 2 components in single file which is not good practice
 import './App.css';
 function App() {
-  let name = "Sumit"
-  let className = "App-header"
-  console.log("I am in App")
+  let name  = 'react app'
+  let className = 'App-header';
+  console.log('App')
   return (
-    <div className="App">
+    <div className="">
       <div className={className}>
-          Hii My name  is {name}
+         {name}
+         <Demo></Demo>
       </div>
     </div>
   );
 }
-export {App};
+
+function Demo() {
+  console.log('Demo')
+  return (
+    <div className="App">
+      <div className='App-header'>
+         Demo
+      </div>
+    </div>
+  );
+}
+
+export default App;
