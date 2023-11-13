@@ -8,3 +8,11 @@
   display: flex;
   flex-direction: column;
 }
+.darkMode{
+  background-color: rgb(49, 49, 49);
+  color: white;
+}
+.lightMode{
+  background-color: rgb(225, 225, 225);
+  color:black
+}

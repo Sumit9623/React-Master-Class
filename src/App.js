@@ -6,8 +6,9 @@
 
 import VideoList from "./Chapter_6/02_Video_List";
 import AddVideo from "./Chapter_6/01_Forms";
-import { useReducer, useState } from "react";
+import { useReducer, useState} from "react";
 import "./App.css";
+import ThemeContext from "./Chapter_9/01_Context";
 
 const videos_array = [
   {id: 1,title: "React JS tutorial",views: "999K",time: "1 year ago",channel: "Coder Dost",verified: true},
@@ -16,6 +17,10 @@ const videos_array = [
 ];
 
 function App() {
+
+  // const themeContext = useContext(ThemeContext);
+
+  const [mode,setMode] = useState('darkMode')
 
   // State 1: editable
   const [editableVideo,setEditableVideo] = useState(null)
@@ -43,12 +48,15 @@ function App() {
     }
   }
 
-
   return (
-    <>
-      <AddVideo dispatch={dispatch} editableVideo={editableVideo} ></AddVideo>
-      <VideoList dispatch={dispatch}  videos={videos} editVideo={editVideo}></VideoList>
-    </>
+    <ThemeContext.Provider value={mode}>
+      <div className={mode}>
+        <button onClick={()=>{setMode((mode==='darkMode')?'lightMode':'darkMode')}}>{(mode==='darkMode')?"LightMode":"DarkMode"}</button>
+        <AddVideo dispatch={dispatch} editableVideo={editableVideo} ></AddVideo>
+        <VideoList dispatch={dispatch}  videos={videos} editVideo={editVideo}></VideoList>
+      </div>
+    </ThemeContext.Provider>
+
   );
 }
 export default App;
