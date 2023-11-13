@@ -17,30 +17,30 @@ const videos_array = [
 
 function App() {
   const [videos,setVideos] = useState(videos_array);
+  const [editableVideo,setEditableVideo] = useState(null)
   function addVideo(video)
   {
       setVideos([...videos,{...video,id:videos.length+1}])
   }
+  function deleteVideo(id)
+  {
+      setVideos(videos.filter(vid=>vid.id!==id))
+  }
+  function editVideo(id)
+  {
+    setEditableVideo(videos.find(vid=>vid.id===id));
+  }
+  function updateVideo(video)
+  {
+    const index = videos.findIndex(vid=>vid.id===video.id)
+    const newVidoes = [...videos]
+    newVidoes.splice(index,1,video);
+    setVideos(newVidoes)
+  }
   return (
     <>
-    {/* Below are the two siblings of App the state change is happen between them */}
-    <AddVideo addVideo={addVideo}></AddVideo>
-    <VideoList videos={videos}></VideoList>
-
-    {/* <div className="container" onClick={()=>{console.log("App Clicked")}}>
-        {
-          videos.map((video) => {
-            return (
-              <Video {...{ ...video, key: video.id }}>
-                <PlayButton onPlay={() => {console.log("Playing...",video.title);}} onPause={() => {console.log("Paused...",video.title);}}>
-                  Play
-                </PlayButton>
-              </Video>
-              )
-            })
-          }
-        <Counter>Counter</Counter>
-    </div> */}
+      <AddVideo addVideo={addVideo} editableVideo={editableVideo} updateVideo={updateVideo}></AddVideo>
+      <VideoList deleteVideo={deleteVideo} videos={videos} editVideo={editVideo}></VideoList>
     </>
   );
 }
