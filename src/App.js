@@ -6,7 +6,7 @@
 
 import VideoList from "./Chapter_6/02_Video_List";
 import AddVideo from "./Chapter_6/01_Forms";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import "./App.css";
 
 const videos_array = [
@@ -16,31 +16,38 @@ const videos_array = [
 ];
 
 function App() {
-  const [videos,setVideos] = useState(videos_array);
+
+  // State 1: editable
   const [editableVideo,setEditableVideo] = useState(null)
-  function addVideo(video)
-  {
-      setVideos([...videos,{...video,id:videos.length+1}])
-  }
-  function deleteVideo(id)
-  {
-      setVideos(videos.filter(vid=>vid.id!==id))
-  }
   function editVideo(id)
   {
     setEditableVideo(videos.find(vid=>vid.id===id));
   }
-  function updateVideo(video)
-  {
-    const index = videos.findIndex(vid=>vid.id===video.id)
-    const newVidoes = [...videos]
-    newVidoes.splice(index,1,video);
-    setVideos(newVidoes)
+
+  // State 2: videos
+  const [videos,dispatch] = useReducer(videoReducer,videos_array)
+  function videoReducer(videos,action){
+    switch(action.type){
+      case 'ADD':
+        return [...videos,{...action.payload,id:videos.length+1}]
+      case 'DELETE':
+        return videos.filter(vid=>vid.id!==action.payload)
+      case 'UPDATE':
+        const index = videos.findIndex(vid=>vid.id===action.payload.id)
+        const newVidoes = [...videos]
+        newVidoes.splice(index,1,action.payload);
+        setEditableVideo(null)
+        return newVidoes;
+      default:
+        return videos;
+    }
   }
+
+
   return (
     <>
-      <AddVideo addVideo={addVideo} editableVideo={editableVideo} updateVideo={updateVideo}></AddVideo>
-      <VideoList deleteVideo={deleteVideo} videos={videos} editVideo={editVideo}></VideoList>
+      <AddVideo dispatch={dispatch} editableVideo={editableVideo} ></AddVideo>
+      <VideoList dispatch={dispatch}  videos={videos} editVideo={editVideo}></VideoList>
     </>
   );
 }

@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from "react"
 import './01_Forms.css'
-function AddVideo({addVideo,updateVideo,editableVideo})
+function AddVideo({dispatch,editableVideo})
 {
     const initial_video = {title:'',views:'',time: '1 month ago',channel: 'Sumit Tupe',verified: true}
     const [video,setVideo]=useState(initial_video);
@@ -19,14 +19,19 @@ function AddVideo({addVideo,updateVideo,editableVideo})
         e.stopPropagation();
         if(editableVideo)
         {
-            updateVideo(video)
+            dispatch({type:"UPDATE",payload:video})
         }
-        else {addVideo(video);}
+        else
+        {
+            dispatch({type:"ADD",payload:video})
+        }
         setVideo({...initial_video})
     }
+
     useEffect(()=>{
         if(editableVideo) {setVideo(editableVideo)}
-    },[editableVideo])
+        },[editableVideo])
+
     return(
         <form>
             <input type="text" name="title" onChange={handleChange} placeholder="Video Title" value={video.title}></input>

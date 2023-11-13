@@ -1,13 +1,12 @@
 import { useState } from "react";
 import "./01_PlayButton.css";
-function PlayButton({ children, onPlay, onPause }) {
-  // children prop will bring all content writen inside button in App.js
-  // const handleClick = ()=>{console.log(message)}
-  // let playing = false; // Don't use this approach
 
+function PlayButton({onPlay, onPause })
+{
     const [playing,setPlaying] = useState(false)
-    function handleClick(e) {
-      e.stopPropagation();  // To stop parent event handling
+    function handleClick(e)
+    {
+      e.stopPropagation();
       playing ? onPause() : onPlay();
       setPlaying((playing)=>!playing)
     }
