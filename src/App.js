@@ -7,18 +7,20 @@
 import VideoList from "./Chapter_6/02_Video_List";
 import AddVideo from "./Chapter_6/01_Forms";
 import { useReducer, useState} from "react";
-import "./App.css";
 import ThemeContext from "./Chapter_9/01_Context";
 import VideosContext from "./Chapter_10/01_Video_Context";
 import VideoDispatchContext from "./Chapter_10/01_VideoDispatchContext";
+import "./App.css";
+import Counter from "./Chapter_11/01_useRef";
 
 const videos_array = [
-  {id: 1,title: "React JS tutorial",views: "999K",time: "1 year ago",channel: "Coder Dost",verified: true},
-  {id: 2,title: "Node JS tutorial",views: "100K",time: "1 year ago",channel: "Coder Dost",verified: false},
-  {id: 3,title: "MongoDB tutorial",views: "1M",time: "1 month ago",channel: "Coder Dost",verified: true},
-];
+    {id: 1,title: "React JS tutorial",views: "999K",time: "1 year ago",channel: "Coder Dost",verified: true},
+    {id: 2,title: "Node JS tutorial",views: "100K",time: "1 year ago",channel: "Coder Dost",verified: false},
+    {id: 3,title: "MongoDB tutorial",views: "1M",time: "1 month ago",channel: "Coder Dost",verified: true},
+  ];
 
-function App() {
+function App()
+{
 
   const [mode,setMode] = useState('darkMode')
 
@@ -47,10 +49,12 @@ function App() {
   }
 
   return (
+
     <ThemeContext.Provider value={mode}>
       <VideosContext.Provider value={videos}>
         <VideoDispatchContext.Provider value={dispatch}>
           <div className={mode}>
+            <Counter>Add</Counter>
             <button onClick={()=>{setMode((mode==='darkMode')?'lightMode':'darkMode')}}>{(mode==='darkMode')?"LightMode":"DarkMode"}</button>
             <AddVideo editableVideo={editableVideo} ></AddVideo>
             <VideoList editVideo={editVideo}></VideoList>
