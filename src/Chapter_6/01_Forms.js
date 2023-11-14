@@ -2,12 +2,16 @@
 // this file is to understand the how we can chnge state of parent by child element
 // in this file one video get added in App when we submi form
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import './01_Forms.css'
-function AddVideo({dispatch,editableVideo})
+import VideoDispatchContext from "../Chapter_10/01_VideoDispatchContext";
+function AddVideo({editableVideo})
 {
+    const dispatch = useContext(VideoDispatchContext)
     const initial_video = {title:'',views:'',time: '1 month ago',channel: 'Sumit Tupe',verified: true}
+
     const [video,setVideo]=useState(initial_video);
+    
     function handleChange(e)
     {
         e.stopPropagation();

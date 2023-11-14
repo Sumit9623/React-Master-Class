@@ -2,10 +2,14 @@ import "./01_Conditional_Rendering.css";
 import PlayButton from '../Chapter_4/01_PlayButton'
 import { useContext } from "react";
 import ThemeContext from "../Chapter_9/01_Context";
-function Video({title,id,channel="Coder Dost",views,time,verified,dispatch,editVideo})
+import VideoDispatchContext from "../Chapter_10/01_VideoDispatchContext";
+
+function Video({title,id,channel,views,time,verified,editVideo})
 {
   const themeContext = useContext(ThemeContext);
+  const dispatch = useContext(VideoDispatchContext)
   let img_url = `https://picsum.photos/id/${id}/160/90`;
+
   return (
     <div className={`Thumbnail ${themeContext}`}>
       <img src={img_url} alt="Katherine_Johnson" />
